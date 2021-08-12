@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import MyModal from './MyModal';
-
 export class TaskList extends Component {
     constructor(props) {
         super(props)
@@ -13,6 +12,10 @@ export class TaskList extends Component {
     }
 
     removeTask(index) {
+        if(!window.confirm('Do you really want to delete this task?')) {
+            return false;
+        }
+
         this.props.setList((prevList) => {
             const list = [...prevList];
             list.splice(index, 1);
@@ -42,7 +45,7 @@ export class TaskList extends Component {
         }
         this.props.setList((prevList) => {
             let list = [...prevList];
-            list.splice(this.state.index, 1, { task: task, completed: completed });
+            list.splice(index, 1, { task: task, completed: completed });
             return list;
         });
     }
@@ -65,7 +68,7 @@ export class TaskList extends Component {
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Task</th>
+                            <th style={{ maxWidth: '65%' }}>Task</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -75,13 +78,13 @@ export class TaskList extends Component {
                                 return (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td style={{textDecoration: item.completed && 'line-through'}}>{item.task}</td>
+                                        <td style={{ textDecoration: item.completed && 'line-through' }}>{item.task}</td>
                                         <td>
                                             <div className="buttons">
                                                 {
-                                                     item.completed ? 
-                                                     <button className="button is-info" onClick={({ target }) => this.completeTask(target, index, item.task, item.completed)}>InComplete</button> :
-                                                     <button className="button is-info" onClick={({ target }) => this.completeTask(target, index, item.task, item.completed)}>Completed</button>
+                                                    item.completed ?
+                                                        <button className="button is-info" onClick={(event) => this.completeTask(event.currentTarget, index, item.task, item.completed)}>InComplete</button> :
+                                                        <button className="button is-info" onClick={(event) => this.completeTask(event.currentTarget, index, item.task, item.completed)}>Completed</button>
                                                 }
                                                 <button className="button is-warning" onClick={() => this.editTask(index)} disabled={item.completed}>Edit</button>
                                                 <button className="button is-danger" onClick={() => this.removeTask(index)}>Delete</button>
