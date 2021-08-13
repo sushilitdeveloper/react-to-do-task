@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import MyModal from './MyModal';
+import markButton from '../images/check-mark-3-32.png';
+import redoButton from '../images/redo-5-32.png';
+import editButton from '../images/edit-32.png';
+import deleteButton from '../images/delete-32.png';
 export class TaskList extends Component {
     constructor(props) {
         super(props)
@@ -12,7 +16,7 @@ export class TaskList extends Component {
     }
 
     removeTask(index) {
-        if(!window.confirm('Do you really want to delete this task?')) {
+        if (!window.confirm('Do you really want to delete this task?')) {
             return false;
         }
 
@@ -29,18 +33,11 @@ export class TaskList extends Component {
     }
 
     completeTask(target, index, task, taskStatus) {
-        const element = target.closest('tr').children.item(1);
         let completed;
         if (taskStatus) {
-            element.style.textDecoration = "";
-            target.innerHTML = 'Completed';
-            target.nextSibling.disabled = false;
             completed = false;
         }
         else {
-            element.style.textDecoration = "line-through";
-            target.innerHTML = 'InComplete';
-            target.nextSibling.disabled = true;
             completed = true;
         }
         this.props.setList((prevList) => {
@@ -67,9 +64,9 @@ export class TaskList extends Component {
                 <table className="table is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th style={{ maxWidth: '65%' }}>Task</th>
-                            <th>Action</th>
+                            <th style={{width: 50}}>No.</th>
+                            <th>Task</th>
+                            <th style={{ width: 230 }}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,11 +80,11 @@ export class TaskList extends Component {
                                             <div className="buttons">
                                                 {
                                                     item.completed ?
-                                                        <button className="button is-info" onClick={(event) => this.completeTask(event.currentTarget, index, item.task, item.completed)}>InComplete</button> :
-                                                        <button className="button is-info" onClick={(event) => this.completeTask(event.currentTarget, index, item.task, item.completed)}>Completed</button>
+                                                        <button className="button is-white" onClick={(event) => this.completeTask(event.currentTarget, index, item.task, item.completed)}><img alt="unmark" src={redoButton}/></button> :
+                                                        <button className="button is-white" onClick={(event) => this.completeTask(event.currentTarget, index, item.task, item.completed)}><img alt="mark" src={markButton}/></button>
                                                 }
-                                                <button className="button is-warning" onClick={() => this.editTask(index)} disabled={item.completed}>Edit</button>
-                                                <button className="button is-danger" onClick={() => this.removeTask(index)}>Delete</button>
+                                                <button className="button is-white" onClick={() => this.editTask(index)} disabled={item.completed}><img alt="edit" src={editButton}/></button>
+                                                <button className="button is-white" onClick={() => this.removeTask(index)}><img alt="delete" src={deleteButton}/></button>
                                             </div>
                                         </td>
                                     </tr>

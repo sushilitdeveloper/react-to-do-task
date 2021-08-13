@@ -7,7 +7,7 @@ function App() {
   const [list, setList] = useState([]);
   useEffect(() => {
     const ls = JSON.parse(window.localStorage.getItem('taskList'));
-    if(ls) {
+    if (ls) {
       setList(ls);
     }
     document.title = "Todo App";
@@ -17,7 +17,7 @@ function App() {
     localStorage.removeItem('taskList');
     localStorage.setItem('taskList', JSON.stringify(list));
   }, [list]);
-  
+
   const addItem = (obj) => {
     setList(obj);
   }
@@ -26,9 +26,9 @@ function App() {
     <>
       <div className="container">
         <div className="my-4 box">
-          <AddTask setList={addItem}/>
+          <AddTask setList={addItem} />
           <hr />
-          <TaskList listData={list} setList={setList}/>
+          <TaskList listData={list} setList={setList} />
         </div>
       </div>
       <Footer />
