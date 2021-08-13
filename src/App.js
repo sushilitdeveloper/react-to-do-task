@@ -10,7 +10,6 @@ function App() {
     if (ls) {
       setList(ls);
     }
-    document.title = "Todo App";
   }, []);
 
   useEffect(() => {
